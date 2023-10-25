@@ -3,8 +3,6 @@ module com.example.calculadora2 {
     requires javafx.fxml;
     requires webcam.capture;
     requires java.desktop;
-    requires tess4j;
-    requires opencv;
 
 
     opens com.example.calculadora2 to javafx.fxml;

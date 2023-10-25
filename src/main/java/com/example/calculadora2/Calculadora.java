@@ -37,12 +37,21 @@ public class Calculadora extends Application {
         button1.setLayoutX(10);
         button1.setLayoutY(50);
 
+        Button button2 = new Button("Camara");
+        button2.setLayoutX(80);
+        button2.setLayoutY(50);
+
+        Button button3 = new Button("Historial");
+        button2.setLayoutX(120);
+        button2.setLayoutY(50);
+
         // Acción para el Botón
         button1.setOnAction(e -> calcularExpresion());
+        button2.setOnAction(e -> new camara());
+
 
         // Pane
         Pane pane = new Pane();
-        pane.getChildren().addAll(textField, labelResultado, button1);
 
         // Crear la escena
         Scene scene = new Scene(pane, 300, 200);
