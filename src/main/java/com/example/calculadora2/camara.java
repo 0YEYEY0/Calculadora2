@@ -38,7 +38,7 @@ public class camara {
                 ImageIO.write(image, "jpg", outputImage);
 
                 // Espera un tiempo antes de capturar otra imagen
-                Thread.sleep(1000);
+                Thread.sleep(10000000);
             } catch (TesseractException | InterruptedException | IOException e) {
                 System.err.println("Error: " + e.getMessage());
             }
