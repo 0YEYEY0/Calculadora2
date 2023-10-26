@@ -8,6 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 public class Calculadora extends Application {
 
     private TextField textField;
@@ -47,11 +52,12 @@ public class Calculadora extends Application {
 
         // Acción para el Botón
         button1.setOnAction(e -> calcularExpresion());
+        button2.setOnAction(e -> new camara());
 
 
         // Pane
         Pane pane = new Pane();
-        pane.getChildren().addAll(textField,labelResultado,button1,button2,button3);
+        pane.getChildren().addAll(textField, labelResultado, button1, button2,button3);
         // Crear la escena
         Scene scene = new Scene(pane, 300, 200);
 
@@ -64,12 +70,24 @@ public class Calculadora extends Application {
 
     private void calcularExpresion() {
         String expresion = textField.getText();
-        ArbolExpresion arbol = new ArbolExpresion(expresion);
-        double resultado = arbol.evaluar();
 
-        // Mostrar el resultado en el Label
-        labelResultado.setText("Resultado: " + resultado);
+        try (Socket socket = new Socket("localhost", 12345)) { // Conéctate al servidor en el mismo equipo
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+            // Enviar la expresión al servidor
+            out.writeObject(expresion);
+
+            // Recibir el resultado del servidor
+            double resultado = (Double) in.readObject();
+
+            // Mostrar el resultado en el Label
+            labelResultado.setText("Resultado: " + resultado);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
+
 }
 
 
