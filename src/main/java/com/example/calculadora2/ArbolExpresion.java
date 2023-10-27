@@ -2,15 +2,29 @@ package com.example.calculadora2;
 
 
 import java.util.Stack;
-
+/**
+ * Esta clase representa un árbol de expresión que se utiliza para evaluar expresiones matemáticas.
+ */
 public class ArbolExpresion {
     private Nodo raiz;
 
+
+
+    /**
+     * Construye un árbol de expresión a partir de una expresión matemática dada.
+     *
+     * @param expresion La expresión matemática en forma de cadena.
+     */
     public ArbolExpresion(String expresion) {
         expresion = expresion.replace("**", "Math.pow");
         raiz = construirArbol(expresion);
     }
-
+    /**
+     * Construye el árbol de expresión a partir de la cadena de expresión dada.
+     *
+     * @param expresion La expresión matemática en forma de cadena.
+     * @return La raíz del árbol de expresión.
+     */
     private Nodo construirArbol(String expresion) {
         Stack<Nodo> stack = new Stack<>();
         Stack<Character> operadores = new Stack<>();
@@ -47,11 +61,21 @@ public class ArbolExpresion {
 
         return stack.pop();
     }
-
+    /**
+     * Verifica si un carácter es un operador.
+     *
+     * @param c El carácter a verificar.
+     * @return true si el carácter es un operador, de lo contrario, false.
+     */
     private boolean esOperador(char c) {
         return c == '+' || c == '-' || c == '*' || c == '/' || c == '%' || c == '&' || c == '|' || c == '!' || c == '^';
     }
-
+    /**
+     * Determina la precedencia de un operador dado.
+     *
+     * @param c El operador a evaluar.
+     * @return El nivel de precedencia del operador.
+     */
     private int precedencia(char c) {
         if (c == '+' || c == '-') {
             return 1;
@@ -64,7 +88,12 @@ public class ArbolExpresion {
         }
         return 0;
     }
-
+    /**
+     * Procesa un operador y realiza las operaciones correspondientes.
+     *
+     * @param stack      La pila de nodos.
+     * @param operadores La pila de operadores.
+     */
     private void procesarOperador(Stack<Nodo> stack, Stack<Character> operadores) {
         char operador = operadores.pop();
         if (operador == '!' || operador == '&' || operador == '|') {
@@ -94,7 +123,11 @@ public class ArbolExpresion {
         }
     }
 
-
+    /**
+     * Evalúa la expresión matemática representada por el árbol.
+     *
+     * @return El resultado de la evaluación de la expresión.
+     */
     public double evaluar() {
         return evaluar(raiz);
     }

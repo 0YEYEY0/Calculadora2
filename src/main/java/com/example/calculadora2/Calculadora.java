@@ -15,15 +15,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * Esta clase representa una aplicación de calculadora con interfaz gráfica.
+ */
 public class Calculadora extends Application {
 
-    private TextField textField;
-    private Label labelResultado;
+    private TextField textField; // Campo de texto para ingresar expresiones
+    private Label labelResultado; // Etiqueta para mostrar el resultado
 
+    /**
+     * Método principal para iniciar la aplicación.
+     *
+     * @param args Argumentos de línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Método principal para configurar la interfaz gráfica de la calculadora.
+     *
+     * @param primaryStage La ventana principal de la aplicación.
+     */
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Calculadora");
@@ -73,6 +86,9 @@ public class Calculadora extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Este método se utiliza para calcular una expresión ingresada por el usuario.
+     */
     private void calcularExpresion() {
         String expresion = textField.getText();
 
@@ -89,17 +105,17 @@ public class Calculadora extends Application {
             // Mostrar el resultado en el Label
             labelResultado.setText("Resultado: " + resultado);
 
-            // Crear una nueva entrada de registro
+            // Crear una nueva entrada de registro en el historial
             Historial historial = new Historial(expresion, resultado, new Date());
-
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-
-
+    /**
+     * Este método se utiliza para mostrar el historial de cálculos almacenado en un archivo CSV.
+     */
     private void mostrarHistorial() {
         try {
             String csvFileName = "Historial.csv";

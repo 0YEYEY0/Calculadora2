@@ -12,11 +12,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Esta clase representa un servidor de calculadora que escucha conexiones de clientes y realiza cálculos
+ * de expresiones matemáticas enviadas por los clientes.
+ */
 public class ServidorCalculadora {
 
+    /**
+     * Método principal para iniciar el servidor de calculadora.
+     *
+     * @param args Argumentos de línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(12345)) {
-            System.out.println("Servidor en línea. Esperando conexiones...");
+            System.out.println("Servidor en línea. Esperando conexión... (^o^)");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -29,9 +38,17 @@ public class ServidorCalculadora {
         }
     }
 
+    /**
+     * Clase interna que maneja las solicitudes de los clientes en hilos separados.
+     */
     static class ClienteHandler extends Thread {
         private final Socket clientSocket;
 
+        /**
+         * Constructor para la clase ClienteHandler.
+         *
+         * @param clientSocket El socket del cliente.
+         */
         public ClienteHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
@@ -68,11 +85,16 @@ public class ServidorCalculadora {
             }
         }
 
+        /**
+         * Guarda una entrada de registro en un archivo CSV en el servidor.
+         *
+         * @param historial La entrada de registro a guardar.
+         */
         private void guardarRegistroEnCSVEnServidor(Historial historial) {
             String csvFileName = "Historial.csv";
 
             try (FileWriter writer = new FileWriter(csvFileName, true)) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
                 String formattedDate = dateFormat.format(historial.getFecha());
 
                 String csvLine = String.format("%s,%.2f,%s%n", historial.getExpresion(), historial.getResultado(), formattedDate);
@@ -83,5 +105,6 @@ public class ServidorCalculadora {
         }
     }
 }
+
 
 

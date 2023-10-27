@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Esta clase representa una aplicación para capturar imágenes desde la cámara y realizar
+ * reconocimiento óptico de caracteres (OCR) en tiempo real utilizando Tesseract.
+ */
 public class camara {
     public static void main(String[] args) {
         // Inicializa Tesseract
@@ -45,3 +49,4 @@ public class camara {
         }
     }
 }
+
