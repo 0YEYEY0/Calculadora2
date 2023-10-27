@@ -92,26 +92,13 @@ public class Calculadora extends Application {
             // Crear una nueva entrada de registro
             Historial historial = new Historial(expresion, resultado, new Date());
 
-            // Guardar la entrada de registro en un archivo CSV
-            guardarRegistroEnCSV(historial);
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void guardarRegistroEnCSV(Historial historial) {
-        String csvFileName = "Historial.csv";
 
-        try (FileWriter writer = new FileWriter(csvFileName, true)) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = dateFormat.format(historial.getFecha());
-
-            String csvLine = String.format("%s,%.2f,%s%n", historial.getExpresion(), historial.getResultado(), formattedDate);
-            writer.write(csvLine);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void mostrarHistorial() {
         try {
